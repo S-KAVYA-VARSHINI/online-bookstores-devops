@@ -1,0 +1,16 @@
+---
+- name: Deploy Spring Boot Docker container
+hosts: local
+become: true
+tasks:
+- name: Pull Docker image
+shell: docker pull your_dockerhub_username/bookstore-app
+
+- name: Stop existing container (if any)
+shell: docker stop bookstore || true
+
+- name: Remove existing container (if any)
+shell: docker rm bookstore || true
+
+- name: Run new container
+shell: docker run -d -p 8080:8080 --name bookstore your_dockerhub_username/bookstore-app
